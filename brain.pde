@@ -11,6 +11,7 @@ methods:
 - connects nuerons to each other using axons (based on distance? based on)
 
 */
+
 class Brain {
   int number_of_neurons;
   float brain_size;
@@ -81,9 +82,10 @@ class Brain {
         neurons.remove(i);
       }
     }
-    println("number of generated neurons: " + original_size);
-    println("unconnected neurons removed: " + (original_size - neurons.size()));
-    println("number of connected neurons: " + neurons.size());
+    // println("seeder: " + seeder);
+    // println("number of generated neurons: " + original_size);
+    // println("unconnected neurons removed: " + (original_size - neurons.size()));
+    // println("number of connected neurons: " + neurons.size());
   }
   
   void scribble() {

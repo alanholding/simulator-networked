@@ -1,30 +1,38 @@
 /*
 
- 2022-04-18
- 
- - want to do brain neuron pulse travel time again
- - DONE started with point travelling along straight line between two other points.
- 
- 2022-04-25
- 
- - DONE building on this by making the end point movable by mouse
- - TODO i will make the transition between old and new positions of the end point an s-curve next
- - DONE change speed so that it is constant regardless of the distance between the two points
- 
- 2022-05-03
- 
- - DONE starting work to add brain management object
- - DONE connection mapping
- 
- 2022-05-05
- 
- - 3D?
- 
- 2022-05-23
- 
- - FIXED if then bug in neuron connection method which was exiting the loop before completing connections
- 
- */
+2022-04-18
+
+- want to do brain neuron pulse travel time again
+- DONE started with point travelling along straight line between two other points.
+
+2022-04-25
+
+- DONE building on this by making the end point movable by mouse
+- TODO i will make the transition between old and new positions of the end point an s-curve next
+- DONE change speed so that it is constant regardless of the distance between the two points
+
+2022-05-03
+
+- DONE starting work to add brain management object
+- DONE connection mapping
+
+2022-05-05
+
+- 3D?
+
+2022-05-23
+
+- FIXED if then bug in neuron connection method which was exiting the loop before completing connections
+
+2022-06-30
+
+- ADDED controlP5 for seeder value
+
+*/
+
+import controlP5.*;
+
+ControlP5 cp5;
 
 int seeder = 1;
 int number_of_neurons = 10;
@@ -46,10 +54,16 @@ void setup() {
   //noLoop();
   brain = new Brain(number_of_neurons, brain_size, maximum_connection_distance, maximum_connection_distance_variance, initial_speed, curvy);
   display_offset = new PVector((width / 2) - ((brain_size * display_scale) / 2), (height / 2) - ((brain_size * display_scale) / 2));
-}
+  cp5 = new ControlP5(this);
+  cp5.addSlider("seeder")
+     .setPosition(32, 32)
+     .setRange(1, 16)
+     .setId(1)
+     ;}
 
 void draw() {
   background(10, 10, 30);
+
   //pushStyle();
   //noStroke();
   //fill(24, 20, 50, 64);
@@ -61,4 +75,13 @@ void draw() {
   scale(display_scale);
   brain.scribble();
   popMatrix();
+}
+
+void controlEvent(ControlEvent theEvent) {
+  if (theEvent.getController().getId() == 1) {
+    seeder = (int)theEvent.getValue();
+    randomSeed(seeder);
+    noiseSeed(seeder);
+    brain = new Brain(number_of_neurons, brain_size, maximum_connection_distance, maximum_connection_distance_variance, initial_speed, curvy);
+  }
 }
